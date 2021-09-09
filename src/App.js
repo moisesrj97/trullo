@@ -1,4 +1,5 @@
 import './App.scss';
+import store from './store/store';
 
 function App() {
   return (
