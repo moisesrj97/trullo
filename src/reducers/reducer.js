@@ -8,55 +8,66 @@ import {
   TOGGLE_TODO,
 } from '../constants/constants';
 
-const reducer = (state = { lists: [] }, { type, payload }) => {
-  switch (type) {
+const reducer = (state = { lists: [] }, action) => {
+  switch (action.type) {
     case CREATE_LIST:
       const newList = {
         id: uuid(),
-        name: payload.listName,
+        name: action.payload.listName,
         todos: [],
       };
       return { lists: [...state.lists, newList] };
+
     case DELETE_LIST:
       return {
-        lists: state.lists.filter((list) => payload.listId !== list.id),
+        lists: state.lists.filter((list) => action.payload.listId !== list.id),
       };
+
     case CREATE_TODO:
       const newTodo = {
         id: uuid(),
-        text: payload.todoText,
-        completed: payload.todoCompleted,
+        text: action.payload.todoText,
+        completed: false,
       };
+
       return {
         lists: state.lists.map((list) => {
-          if (list.id === payload.listId) {
+          if (list.id === action.payload.listId) {
             return list.todos.push(newTodo);
           } else {
             return list;
           }
         }),
       };
+
     case EDIT_TODO:
       return {
         lists: state.lists.map((list) => {
-          if (list.id === payload.listId) {
+          if (list.id === action.payload.listId) {
             return {
               ...list,
-              todos: list.todos.filter((todo) => payload.todoId !== todo.id),
+              todos: list.todos.map((todo) => {
+                if (action.payload.todoId === todo.id) {
+                  return { ...todo, text: action.payload.newText };
+                } else {
+                  return todo;
+                }
+              }),
             };
           } else {
             return list;
           }
         }),
       };
+
     case TOGGLE_TODO:
       return {
         lists: state.lists.map((list) => {
-          if (list.id === payload.listId) {
+          if (list.id === action.payload.listId) {
             return {
               ...list,
               todos: list.todos.map((todo) => {
-                if (payload.todoId === todo.id) {
+                if (action.payload.todoId === todo.id) {
                   if (todo.completed) {
                     return { ...todo, completed: false };
                   } else {
@@ -72,13 +83,16 @@ const reducer = (state = { lists: [] }, { type, payload }) => {
           }
         }),
       };
+
     case DELETE_TODO:
       return {
         lists: state.lists.map((list) => {
-          if (list.id === payload.listId) {
+          if (list.id === action.payload.listId) {
             return {
               ...list,
-              todos: list.todos.filter((todo) => payload.todoId !== todo.id),
+              todos: list.todos.filter(
+                (todo) => action.payload.todoId !== todo.id
+              ),
             };
           } else {
             return list;
