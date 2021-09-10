@@ -20,6 +20,15 @@ const fakeState = {
         { id: uuid(), text: 'Get some sleep', completed: false },
       ],
     },
+    {
+      id: uuid(),
+      name: 'List 2',
+      todos: [
+        { id: uuid(), text: 'Learn Beautiful-DnD 2', completed: false },
+        { id: uuid(), text: 'Implement dnd 2', completed: false },
+        { id: uuid(), text: 'Get some sleep 2', completed: false },
+      ],
+    },
   ],
 };
 
@@ -115,25 +124,56 @@ const reducer = (state = fakeState, action) => {
         }),
       };
     case REORDER_TODO:
-      return {
-        ...state,
-        lists: state.lists.map((list) => {
-          if (list.id !== action.payload.destination.droppableId) {
-            return list;
-          } else {
-            const draggableTodo = list.todos.find(
-              (todo) => todo.id === action.payload.draggableId
-            );
-            list.todos.splice(action.payload.source.index, 1);
-            list.todos.splice(
-              action.payload.destination.index,
-              0,
-              draggableTodo
-            );
-            return list;
-          }
-        }),
-      };
+      const sourceList = state.lists.find(
+        (e) => e.id === action.payload.source.droppableId
+      );
+
+      const draggableTodo = sourceList.todos.find(
+        (todo) => todo.id === action.payload.draggableId
+      );
+
+      if (!action.payload.destination) {
+        return state;
+      } else if (
+        action.payload.destination.droppableId ===
+        action.payload.source.droppableId
+      ) {
+        return {
+          ...state,
+          lists: state.lists.map((e) => {
+            if (e.id === sourceList.id) {
+              e.todos.splice(action.payload.source.index, 1);
+              e.todos.splice(
+                action.payload.destination.index,
+                0,
+                draggableTodo
+              );
+              return e;
+            } else {
+              return e;
+            }
+          }),
+        };
+      } else {
+        return {
+          ...state,
+          lists: state.lists.map((list) => {
+            if (list.id === action.payload.source.droppableId) {
+              list.todos.splice(action.payload.source.index, 1);
+              return list;
+            } else if (list.id === action.payload.destination.droppableId) {
+              list.todos.splice(
+                action.payload.destination.index,
+                0,
+                draggableTodo
+              );
+              return list;
+            } else {
+              return list;
+            }
+          }),
+        };
+      }
 
     default:
       return state;

@@ -29,9 +29,13 @@ function App() {
   return (
     <div className='App'>
       <h1>Hello world!</h1>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <List listInfo={state.lists[0]} />
-      </DragDropContext>
+      <div className='listsContainer'>
+        <DragDropContext onDragEnd={onDragEnd}>
+          {state.lists.map((e, index) => {
+            return <List listInfo={e} key={index} />;
+          })}
+        </DragDropContext>
+      </div>
     </div>
   );
 }
