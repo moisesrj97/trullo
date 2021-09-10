@@ -6,3 +6,5 @@ export const CREATE_TODO = 'CREATE_TODO';
 export const EDIT_TODO = 'EDIT_TODO';
 export const TOGGLE_TODO = 'CREATE_TODO';
 export const DELETE_TODO = 'CREATE_TODO';
+
+export const REORDER_TODO = 'REORDER_TODO';

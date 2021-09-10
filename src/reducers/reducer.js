@@ -5,10 +5,25 @@ import {
   DELETE_LIST,
   DELETE_TODO,
   EDIT_TODO,
+  REORDER_TODO,
   TOGGLE_TODO,
 } from '../constants/constants';
 
-const reducer = (state = { lists: [] }, action) => {
+const fakeState = {
+  lists: [
+    {
+      id: uuid(),
+      name: 'List 1',
+      todos: [
+        { id: uuid(), text: 'Learn Beautiful-DnD', completed: false },
+        { id: uuid(), text: 'Implement dnd', completed: false },
+        { id: uuid(), text: 'Get some sleep', completed: false },
+      ],
+    },
+  ],
+};
+
+const reducer = (state = fakeState, action) => {
   switch (action.type) {
     case CREATE_LIST:
       const newList = {
@@ -99,6 +114,27 @@ const reducer = (state = { lists: [] }, action) => {
           }
         }),
       };
+    case REORDER_TODO:
+      return {
+        ...state,
+        lists: state.lists.map((list) => {
+          if (list.id !== action.payload.destination.droppableId) {
+            return list;
+          } else {
+            const draggableTodo = list.todos.find(
+              (todo) => todo.id === action.payload.draggableId
+            );
+            list.todos.splice(action.payload.source.index, 1);
+            list.todos.splice(
+              action.payload.destination.index,
+              0,
+              draggableTodo
+            );
+            return list;
+          }
+        }),
+      };
+
     default:
       return state;
   }
