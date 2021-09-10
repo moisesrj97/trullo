@@ -8,4 +8,8 @@ Trullo is the convict cousin of Trello
 
 Trullo is based of React, using Redux for state management, SASS for styling and localStorage as the main storage.
 
+Other packages used are:
+* uuid
+* react-beatifull-dnd
+
 Made with 💚 by MoisesRj97.
