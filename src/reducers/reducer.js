@@ -5,6 +5,7 @@ import {
   DELETE_LIST,
   DELETE_TODO,
   EDIT_TODO,
+  REORDER_COLUMN,
   REORDER_TODO,
   TOGGLE_TODO,
 } from '../constants/constants';
@@ -29,6 +30,15 @@ const fakeState = {
         { id: uuid(), text: 'Get some sleep 2', completed: false },
       ],
     },
+    {
+      id: uuid(),
+      name: 'List 3',
+      todos: [
+        { id: uuid(), text: 'Learn Beautiful-DnD 3', completed: false },
+        { id: uuid(), text: 'Implement dnd 3', completed: false },
+        { id: uuid(), text: 'Get some sleep 3', completed: false },
+      ],
+    },
   ],
 };
 
@@ -46,7 +56,6 @@ const reducer = (state = fakeState, action) => {
       return {
         lists: state.lists.filter((list) => action.payload.listId !== list.id),
       };
-
     case CREATE_TODO:
       const newTodo = {
         id: uuid(),
@@ -63,7 +72,6 @@ const reducer = (state = fakeState, action) => {
           }
         }),
       };
-
     case EDIT_TODO:
       return {
         lists: state.lists.map((list) => {
@@ -83,7 +91,6 @@ const reducer = (state = fakeState, action) => {
           }
         }),
       };
-
     case TOGGLE_TODO:
       return {
         lists: state.lists.map((list) => {
@@ -107,7 +114,6 @@ const reducer = (state = fakeState, action) => {
           }
         }),
       };
-
     case DELETE_TODO:
       return {
         lists: state.lists.map((list) => {
@@ -172,6 +178,23 @@ const reducer = (state = fakeState, action) => {
               return list;
             }
           }),
+        };
+      }
+    case REORDER_COLUMN:
+      if (!action.payload.destination) {
+        return state;
+      } else {
+        const draggableColumn = state.lists.find(
+          (e) => e.id === action.payload.draggableId
+        );
+        const newList = [...state.lists];
+
+        newList.splice(action.payload.source.index, 1);
+        newList.splice(action.payload.destination.index, 0, draggableColumn);
+
+        return {
+          ...state,
+          lists: newList,
         };
       }
 

@@ -7,7 +7,7 @@ const List = (props) => {
   return (
     <div className='List'>
       <h2>{props.listInfo.name}</h2>
-      <Droppable droppableId={props.listInfo.id}>
+      <Droppable droppableId={props.listInfo.id} type='todo'>
         {(provided) => (
           <div
             {...provided.droppableProps}

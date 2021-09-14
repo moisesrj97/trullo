@@ -8,3 +8,4 @@ export const TOGGLE_TODO = 'CREATE_TODO';
 export const DELETE_TODO = 'CREATE_TODO';
 
 export const REORDER_TODO = 'REORDER_TODO';
+export const REORDER_COLUMN = 'REORDER_COLUMN';
