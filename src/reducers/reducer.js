@@ -11,39 +11,10 @@ import {
   TOGGLE_TODO,
 } from '../constants/constants';
 
-const fakeState = {
-  lists: [
-    {
-      id: uuid(),
-      name: 'List 1',
-      todos: [
-        { id: uuid(), text: 'Learn Beautiful-DnD', completed: false },
-        { id: uuid(), text: 'Implement dnd', completed: false },
-        { id: uuid(), text: 'Get some sleep', completed: false },
-      ],
-    },
-    {
-      id: uuid(),
-      name: 'List 2',
-      todos: [
-        { id: uuid(), text: 'Learn Beautiful-DnD 2', completed: false },
-        { id: uuid(), text: 'Implement dnd 2', completed: false },
-        { id: uuid(), text: 'Get some sleep 2', completed: false },
-      ],
-    },
-    {
-      id: uuid(),
-      name: 'List 3',
-      todos: [
-        { id: uuid(), text: 'Learn Beautiful-DnD 3', completed: false },
-        { id: uuid(), text: 'Implement dnd 3', completed: false },
-        { id: uuid(), text: 'Get some sleep 3', completed: false },
-      ],
-    },
-  ],
-};
-
-const reducer = (state = fakeState, action) => {
+const reducer = (
+  state = JSON.parse(window.localStorage.getItem('trullo')) || { lists: [] },
+  action
+) => {
   switch (action.type) {
     case CREATE_LIST:
       const newList = {
@@ -51,8 +22,8 @@ const reducer = (state = fakeState, action) => {
         name: action.payload.listName,
         todos: [],
       };
-      return { lists: [...state.lists, newList] };
-
+      const newState = { lists: [...state.lists, newList] };
+      return newState;
     case DELETE_LIST:
       return {
         lists: state.lists.filter((list) => action.payload.listId !== list.id),

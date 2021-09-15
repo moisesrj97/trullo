@@ -5,13 +5,18 @@ import { v4 as uuid } from 'uuid';
 
 import List from './components/List';
 import { REORDER_COLUMN, REORDER_TODO } from './constants/constants';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { addList } from './actions/actionMaker';
 
 function App() {
   const [newListName, setNewListName] = useState('');
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('Use effect!');
+    window.localStorage.setItem('trullo', JSON.stringify(state));
+  }, [state]);
 
   const onDragEnd = (result) => {
     // console.log(result);
