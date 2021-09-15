@@ -4,6 +4,7 @@ import {
   CREATE_TODO,
   DELETE_LIST,
   DELETE_TODO,
+  EDIT_LIST_NAME,
   EDIT_TODO,
   REORDER_COLUMN,
   REORDER_TODO,
@@ -56,6 +57,17 @@ const reducer = (state = fakeState, action) => {
       return {
         lists: state.lists.filter((list) => action.payload.listId !== list.id),
       };
+    case EDIT_LIST_NAME:
+      return {
+        ...state,
+        lists: state.lists.map((e) => {
+          if (e.id === action.payload.listId) {
+            return { ...e, name: action.payload.newName };
+          } else {
+            return e;
+          }
+        }),
+      };
     case CREATE_TODO:
       const newTodo = {
         id: uuid(),
@@ -66,7 +78,8 @@ const reducer = (state = fakeState, action) => {
       return {
         lists: state.lists.map((list) => {
           if (list.id === action.payload.listId) {
-            return list.todos.push(newTodo);
+            list.todos.push(newTodo);
+            return list;
           } else {
             return list;
           }

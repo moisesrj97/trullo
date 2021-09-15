@@ -1,12 +1,53 @@
 import React from 'react';
+import { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
+import { useDispatch } from 'react-redux';
+import { changeListName, createTodo, removeList } from '../actions/actionMaker';
 import './List.scss';
 import Todo from './Todo';
 
 const List = (props) => {
+  const [inputText, setInputText] = useState('');
+  const [editing, setEditing] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleInputChange = (evt) => {
+    setInputText(evt.target.value);
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    dispatch(createTodo(props.listInfo.id, inputText));
+    setInputText('');
+  };
+
+  const handleListNameChange = (evt) => {
+    dispatch(changeListName(props.listInfo.id, evt.target.value));
+  };
+
+  const handleDelete = () => {
+    dispatch(removeList(props.listInfo.id));
+  };
+
   return (
     <div className='List'>
-      <h2>{props.listInfo.name}</h2>
+      <div className='list-title'>
+        <h2
+          className={editing ? 'hidden' : null}
+          onDoubleClick={() => setEditing(true)}
+        >
+          {props.listInfo.name}
+        </h2>
+        <input
+          type='text'
+          value={props.listInfo.name}
+          onChange={handleListNameChange}
+          className={editing ? 'list-name-input' : 'hidden'}
+          onMouseLeave={() => setEditing(false)}
+        />
+        <i class='fas fa-trash' onClick={handleDelete}></i>
+      </div>
+
       <Droppable droppableId={props.listInfo.id} type='todo'>
         {(provided) => (
           <div
@@ -16,10 +57,25 @@ const List = (props) => {
             todos={props.listInfo.todos}
           >
             {props.listInfo.todos.map((todo, index) => {
-              return <Todo {...todo} index={index} key={todo.id} />;
+              return (
+                <Todo
+                  {...todo}
+                  index={index}
+                  key={todo.id}
+                  listId={props.listInfo.id}
+                />
+              );
             })}
 
             {provided.placeholder}
+            <form onSubmit={handleSubmit}>
+              <input
+                type='text'
+                placeholder='New todo...'
+                onChange={handleInputChange}
+                value={inputText}
+              />
+            </form>
           </div>
         )}
       </Droppable>

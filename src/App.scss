@@ -4,4 +4,7 @@
 
 .listsContainer {
   display: flex;
+  overflow-y: hidden;
+  overflow-x: visible;
+  padding: 20px;
 }

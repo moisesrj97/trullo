@@ -1,4 +1,28 @@
 .Todo {
   border: 3px solid pink;
   background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  .todo-text {
+    &--completed {
+      text-decoration: line-through;
+      opacity: 0.8;
+    }
+    &--hidden {
+      display: none;
+    }
+  }
+  .todo-input {
+    padding: 16px 0;
+    border: none;
+    font-family: 'Urbanist', sans-serif;
+    font-size: 1em;
+    font-style: italic;
+    width: 150px;
+    &--hidden {
+      display: none;
+    }
+  }
 }
