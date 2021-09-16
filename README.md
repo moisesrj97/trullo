@@ -11,6 +11,7 @@ Trullo is based of React, using Redux for state management, SASS for styling and
 Other packages used are:
 * uuid
 * react-beatifull-dnd
+* react-toggle-dark-mode
 
 Made with 💚 by MoisesRj97.
 
