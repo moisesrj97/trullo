@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/trullo/static/css/main.e4ce836e.chunk.css",
+    "main.js": "/trullo/static/js/main.005c5a56.chunk.js",
+    "main.js.map": "/trullo/static/js/main.005c5a56.chunk.js.map",
+    "runtime-main.js": "/trullo/static/js/runtime-main.15d0888c.js",
+    "runtime-main.js.map": "/trullo/static/js/runtime-main.15d0888c.js.map",
+    "static/js/2.92d9e866.chunk.js": "/trullo/static/js/2.92d9e866.chunk.js",
+    "static/js/2.92d9e866.chunk.js.map": "/trullo/static/js/2.92d9e866.chunk.js.map",
+    "static/js/3.0d72a938.chunk.js": "/trullo/static/js/3.0d72a938.chunk.js",
+    "static/js/3.0d72a938.chunk.js.map": "/trullo/static/js/3.0d72a938.chunk.js.map",
+    "index.html": "/trullo/index.html",
+    "static/css/main.e4ce836e.chunk.css.map": "/trullo/static/css/main.e4ce836e.chunk.css.map",
+    "static/js/2.92d9e866.chunk.js.LICENSE.txt": "/trullo/static/js/2.92d9e866.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.15d0888c.js",
+    "static/js/2.92d9e866.chunk.js",
+    "static/css/main.e4ce836e.chunk.css",
+    "static/js/main.005c5a56.chunk.js"
+  ]
+}
