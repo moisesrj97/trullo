@@ -1,14 +1,45 @@
+$dark1: #1b0124;
+$dark2: #6a1498;
+$dark3: #6a1498;
+
+$light1: #ededed;
+$light2: #b462e5;
+$light3: #db86f4;
+
 .List {
-  border: 3px solid black;
   padding: 10px;
   margin: 0 20px;
   width: 200px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.356) 5px 5px 10px;
   .list-title {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    h2 {
+    .h2 {
       flex-grow: 1;
+      color: $dark3;
+    }
+    .darkH2 {
+      flex-grow: 1;
+      color: white;
+    }
+    .i {
+      width: 1%;
+      opacity: 0;
+      color: $dark3;
+    }
+    .darkI {
+      width: 1%;
+      opacity: 0;
+      color: white;
+    }
+    &:hover .i,
+    &:hover .darkI {
+      width: 10%;
+      opacity: 1;
+      transition: all 0.5s;
     }
   }
   .list-name-input {
@@ -20,11 +51,42 @@
     text-align: center;
     margin: 0.83em 0;
     flex-grow: 1;
+    color: $dark3;
+  }
+
+  .dark {
+    background-color: transparent;
+    color: white;
   }
   form {
     height: 1px;
     opacity: 0;
     transition: all 0.25s;
+    margin-bottom: 3px;
+    .input {
+      border-color: $light2;
+      border-radius: 10px;
+      padding: 3px;
+      outline: none;
+      color: $dark3;
+      background-color: rgba(255, 255, 255, 0.233);
+      &::placeholder {
+        color: $dark3;
+        opacity: 0.5;
+      }
+    }
+    .darkInput {
+      border-color: $light1;
+      border-radius: 10px;
+      padding: 3px;
+      outline: none;
+      color: $light1;
+      background-color: rgba(255, 255, 255, 0.3);
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.795);
+        opacity: 0.5;
+      }
+    }
   }
   &:hover form {
     height: 20px;

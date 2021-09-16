@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { changeListName, createTodo, removeList } from '../actions/actionMaker';
 import './List.scss';
 import Todo from './Todo';
@@ -9,6 +9,7 @@ import Todo from './Todo';
 const List = (props) => {
   const [inputText, setInputText] = useState('');
   const [editing, setEditing] = useState(false);
+  const darkMode = useSelector((state) => state.darkMode);
   const dispatch = useDispatch();
 
   const handleInputChange = (evt) => {
@@ -33,7 +34,9 @@ const List = (props) => {
     <div className='List'>
       <div className='list-title'>
         <h2
-          className={editing ? 'hidden' : null}
+          className={
+            (editing ? 'hidden' : null) + ' ' + (darkMode ? 'darkH2' : 'h2')
+          }
           onDoubleClick={() => setEditing(true)}
         >
           {props.listInfo.name}
@@ -42,10 +45,17 @@ const List = (props) => {
           type='text'
           value={props.listInfo.name}
           onChange={handleListNameChange}
-          className={editing ? 'list-name-input' : 'hidden'}
+          className={
+            (editing ? 'list-name-input' : 'hidden') +
+            ' ' +
+            (darkMode ? 'dark' : null)
+          }
           onMouseLeave={() => setEditing(false)}
         />
-        <i class='fas fa-trash' onClick={handleDelete}></i>
+        <i
+          class={darkMode ? 'fas fa-trash darkI' : 'fas fa-trash i'}
+          onClick={handleDelete}
+        ></i>
       </div>
 
       <Droppable droppableId={props.listInfo.id} type='todo'>
@@ -74,6 +84,7 @@ const List = (props) => {
                 placeholder='New todo...'
                 onChange={handleInputChange}
                 value={inputText}
+                className={darkMode ? 'darkInput' : 'input'}
               />
             </form>
           </div>

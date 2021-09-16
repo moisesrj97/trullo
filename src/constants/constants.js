@@ -9,3 +9,5 @@ export const DELETE_TODO = 'DELETE_TODO';
 
 export const REORDER_TODO = 'REORDER_TODO';
 export const REORDER_COLUMN = 'REORDER_COLUMN';
+
+export const DARKMODE_TOGGLE = 'DARKMODE_TOGGLE';

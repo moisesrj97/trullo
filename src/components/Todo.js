@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteTodo, editTodo, toggleTodo } from '../actions/actionMaker';
 import './Todo.scss';
 
 const Todo = (props) => {
   const [editing, setEditing] = useState(false);
+  const darkMode = useSelector((state) => state.darkMode);
 
   const dispatch = useDispatch();
 
@@ -32,11 +33,13 @@ const Todo = (props) => {
           <div className='Todo'>
             <p
               className={
-                editing
+                (editing
                   ? 'todo-text--hidden'
                   : props.completed
                   ? 'todo-text--completed'
-                  : 'todo-text'
+                  : 'todo-text') +
+                ' ' +
+                (darkMode ? 'dark' : null)
               }
               onDoubleClick={() => setEditing(!editing)}
               onClick={handleToggle}
@@ -44,13 +47,20 @@ const Todo = (props) => {
               {props.text}
             </p>
             <input
-              className={!editing ? 'todo-input--hidden' : 'todo-input'}
+              className={
+                (!editing ? 'todo-input--hidden' : 'todo-input') +
+                ' ' +
+                (darkMode ? 'dark' : null)
+              }
               type='text'
               value={props.text}
               onChange={handleChange}
               onMouseLeave={() => setEditing(!editing)}
             />
-            <i class='fas fa-trash' onClick={handleDelete}></i>
+            <i
+              class={darkMode ? 'fas fa-trash darkTodoI' : 'fas fa-trash todoI'}
+              onClick={handleDelete}
+            ></i>
           </div>
         </div>
       )}

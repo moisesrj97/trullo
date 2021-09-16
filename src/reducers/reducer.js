@@ -2,6 +2,7 @@ import { v4 as uuid } from 'uuid';
 import {
   CREATE_LIST,
   CREATE_TODO,
+  DARKMODE_TOGGLE,
   DELETE_LIST,
   DELETE_TODO,
   EDIT_LIST_NAME,
@@ -12,7 +13,10 @@ import {
 } from '../constants/constants';
 
 const reducer = (
-  state = JSON.parse(window.localStorage.getItem('trullo')) || { lists: [] },
+  state = JSON.parse(window.localStorage.getItem('trullo')) || {
+    lists: [],
+    darkMode: false,
+  },
   action
 ) => {
   switch (action.type) {
@@ -22,10 +26,11 @@ const reducer = (
         name: action.payload.listName,
         todos: [],
       };
-      const newState = { lists: [...state.lists, newList] };
+      const newState = { ...state, lists: [...state.lists, newList] };
       return newState;
     case DELETE_LIST:
       return {
+        ...state,
         lists: state.lists.filter((list) => action.payload.listId !== list.id),
       };
     case EDIT_LIST_NAME:
@@ -47,6 +52,7 @@ const reducer = (
       };
 
       return {
+        ...state,
         lists: state.lists.map((list) => {
           if (list.id === action.payload.listId) {
             list.todos.push(newTodo);
@@ -58,6 +64,7 @@ const reducer = (
       };
     case EDIT_TODO:
       return {
+        ...state,
         lists: state.lists.map((list) => {
           if (list.id === action.payload.listId) {
             return {
@@ -77,6 +84,7 @@ const reducer = (
       };
     case TOGGLE_TODO:
       return {
+        ...state,
         lists: state.lists.map((list) => {
           if (list.id === action.payload.listId) {
             return {
@@ -100,6 +108,7 @@ const reducer = (
       };
     case DELETE_TODO:
       return {
+        ...state,
         lists: state.lists.map((list) => {
           if (list.id === action.payload.listId) {
             return {
@@ -181,7 +190,8 @@ const reducer = (
           lists: newList,
         };
       }
-
+    case DARKMODE_TOGGLE:
+      return { ...state, darkMode: !state.darkMode };
     default:
       return state;
   }
